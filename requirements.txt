@@ -1,0 +1,29 @@
+# === Core framework ===
+fastapi
+uvicorn
+
+# Untuk upload file/form di FastAPI
+python-multipart
+
+# === LangChain & LLM stack ===
+langchain-openai
+langchain-core
+langchain-chroma
+chromadb
+openai
+
+# === Document processing / RAG ===
+unstructured[pdf]
+Pillow
+
+# === Supabase client ===
+supabase
+
+# === Dashboard / UI ===
+dash
+dash-bootstrap-components
+
+# === Utilities ===
+requests
+python-dotenv
+pydantic
