@@ -1,83 +1,81 @@
 # RAG_MULTIMODAL
 
-Sistem **Retrieval-Augmented Generation (RAG) multimodal** yang memanfaatkan:
+RAG_MULTIMODAL is a Retrieval-Augmented Generation (RAG) system that combines:
 
-- **Unstructured** untuk ekstraksi konten PDF (dan dokumen lain),
-- **ChromaDB** untuk vector store,
-- **LangChain + OpenAI** untuk LLM,
-- **Supabase** untuk penyimpanan metadata / file,
-- **FastAPI** sebagai backend API,
-- **Dash** sebagai dashboard interaktif.
+- Unstructured for PDF and document parsing
+- ChromaDB as a local vector store
+- LangChain + OpenAI for LLM-based reasoning and generation
+- Supabase for file/metadata storage (optional)
+- FastAPI as the backend API
+- Dash as an interactive dashboard
 
-Repo ini bisa dipakai sebagai template untuk project RAG berbasis dokumen yang ingin dikembangkan jadi produk beneran.
-
----
-
-## ✨ Fitur Utama
-
-- 📄 **Ekstraksi PDF Multimodal dengan Unstructured**
-  - Ekstraksi teks + struktur + (opsional) gambar dari PDF.
-  - Bisa diintegrasikan dengan Supabase untuk upload / download file.
-
-- 🔎 **Semantic Retrieval dengan ChromaDB**
-  - Menyimpan embedding dokumen ke vector store lokal (`./data/...`).
-  - Pencarian top-k chunk relevan berdasarkan pertanyaan user.
-
-- 🧠 **LLM Answer Generation (RAG)**
-  - Menggabungkan hasil retrieval ke dalam prompt.
-  - Menghasilkan jawaban + (opsional) sumber referensi.
-
-- 🌐 **FastAPI Backend**
-  - Endpoint untuk:
-    - Upload / ingest PDF,
-    - Menyimpan embedding ke Chroma,
-    - Query RAG (tanya jawab berbasis dokumen).
-
-- 📊 **Dash Dashboard**
-  - UI sederhana untuk:
-    - Upload file,
-    - Kirim pertanyaan,
-    - Melihat jawaban + konteks.
-
-- 🧱 **Arsitektur Modular**
-  - `core/` untuk logic utama (extraction, store, retrieval, generation).
-  - `clients/` untuk integrasi eksternal (Supabase).
-  - `config/` untuk logging.
-  - `app/` untuk FastAPI + Dash.
+This repository can be used as a template for building RAG-based document applications or as a starting point for research and production systems.
 
 ---
 
-## 📁 Struktur Project
+## Features
+
+- PDF extraction with Unstructured  
+  Extracts structured text (and optionally images) from PDF files for downstream processing.
+
+- Semantic retrieval with ChromaDB  
+  Indexes document chunks as embeddings and retrieves top-k relevant context for a given query.
+
+- RAG answer generation  
+  Combines retrieved context with an LLM (via LangChain + OpenAI) to generate grounded answers.
+
+- FastAPI backend  
+  Provides API endpoints for:
+  - Ingesting and processing uploaded PDF files
+  - Storing embeddings in Chroma
+  - Querying the RAG pipeline
+
+- Dash dashboard  
+  Frontend dashboard for:
+  - Uploading files
+  - Sending questions
+  - Viewing answers and context
+
+- Modular architecture  
+  Clear separation between:
+  - Core logic (extraction, retrieval, generation, store)
+  - Infrastructure clients (Supabase)
+  - Configuration (logging)
+  - Application layer (FastAPI and Dash)
+
+---
+
+## Project Structure
 
 ```text
 RAG_MULTIMODAL/
 ├─ app/
 │  ├─ __init__.py
-│  ├─ app_dash.py          # Dashboard (Dash)
-│  └─ main.py              # FastAPI app / entrypoint backend
+│  ├─ app_dash.py          # Dash dashboard entrypoint
+│  └─ main.py              # FastAPI application entrypoint
 │
 ├─ clients/
 │  ├─ __init__.py
-│  └─ supabase_client.py   # Koneksi ke Supabase
+│  └─ supabase_client.py   # Supabase client configuration
 │
 ├─ config/
 │  ├─ __init__.py
-│  └─ logger_config.py     # Setup & helper logging
+│  └─ logger_config.py     # Logging setup and helpers
 │
 ├─ core/
 │  ├─ __init__.py
-│  ├─ extraction.py        # Ekstraksi PDF dengan Unstructured
-│  ├─ retrieval.py         # Fungsi retrieval ke Chroma
-│  ├─ generation.py        # Prompting & LLM answer generation
-│  └─ store.py             # Konfigurasi & helper Chroma
+│  ├─ extraction.py        # PDF parsing with Unstructured
+│  ├─ retrieval.py         # Chroma retrieval functions
+│  ├─ generation.py        # LLM-based answer generation
+│  └─ store.py             # Chroma configuration and helpers
 │
 ├─ data/
-│  ├─ chromaa_hendb/       # Folder instance ChromaDB
-│  └─ chromaa_lawak/       # Instance lain (namespace lain)
+│  ├─ chromaa_db/       # ChromaDB instance (example)
+│        # Another ChromaDB namespace (example)
 │
-├─ logs/                   # File log runtime
-├─ venv/                   # Virtual environment (ignored)
-├─ .env                    # Environment variables (ignored)
+├─ logs/                   # Runtime logs
+├─ venv/                   # Virtual environment (git-ignored)
+├─ .env                    # Environment variables (git-ignored)
 ├─ .gitignore
 ├─ requirements.txt
 └─ README.md
